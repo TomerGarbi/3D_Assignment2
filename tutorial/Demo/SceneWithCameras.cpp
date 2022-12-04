@@ -159,7 +159,7 @@ void SceneWithCameras::Init(float fov, int width, int height, float near, float 
     cube2->Translate({3, 0, -5});
     root->AddChildren({cube1, cube2});
 
-    auto snakeMesh{ObjLoader::MeshFromObjFiles<std::string>("snakeMesh", "data/snake1.obj", "data/snake2.obj")};
+    auto snakeMesh{ObjLoader::MeshFromObjFiles<std::string>("snakeMesh", "data/snake1.obj")};
     auto blank{std::make_shared<Material>("blank", program)};
     auto snake{Model::Create("snake", snakeMesh, blank)};
 
