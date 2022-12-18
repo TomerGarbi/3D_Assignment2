@@ -41,6 +41,8 @@ public:
     bool showWireframe = false;
     Eigen::Vector4f wireframeColor{0, 0, 0, 0};
     int meshIndex = 0;
+    bool move = false;
+    Eigen::Vector3f direction{ 0, 0, 0 };
 
     inline std::shared_ptr<Mesh> GetMesh(int index = 0) const { return meshList[index]; }
     inline std::vector<std::shared_ptr<Mesh>> GetMeshList() const {return meshList;}

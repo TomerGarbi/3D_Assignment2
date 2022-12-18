@@ -102,7 +102,7 @@ void BasicScene::Init(float fov, int width, int height, float near, float far)
     auto morphFunc = [&](Model* model, cg3d::Visitor* visitor) {
         return model->meshIndex;
     };
-    sphere1 = Model::Create("sphere", bunnyMesh, material);
+    sphere1 = Model::Create("sphere", handMesh, material);
     //cube = Model::Create("cube", cubeMesh, material);
 
     autoSphere = AutoMorphingModel::Create(*sphere1, morphFunc);
@@ -138,6 +138,7 @@ void BasicScene::Init(float fov, int width, int height, float near, float far)
             Q.emplace(costs(e), e, 0);
         }
     }
+    max_iter = std::ceil(0.10 * Q.size());
 }
 
 void BasicScene::Update(const Program& program, const Eigen::Matrix4f& proj, const Eigen::Matrix4f& view, const Eigen::Matrix4f& model)
@@ -211,7 +212,7 @@ void BasicScene::KeyCallback(cg3d::Viewport* _viewport, int x, int y, int key, i
             if (pickedModel)
             {   
                 int num_collapsed = 0;
-                int max_iter = std::ceil(0.10 * Q.size());
+                //int max_iter = std::ceil(0.10 * Q.size());
                 for (int j = 0; j < max_iter; j++)
                 {
                     if (!igl::collapse_edge(igl::shortest_edge_and_midpoint, V, F, E, EMAP, EF, EI, Q, EQ, C))
@@ -226,6 +227,7 @@ void BasicScene::KeyCallback(cg3d::Viewport* _viewport, int x, int y, int key, i
                 mesh[0]->data.push_back({ V, F, N, T });
                 autoSphere->SetMeshList(mesh);
                 autoSphere->meshIndex = autoSphere->GetMeshList()[0]->data.size() - 1;
+                max_iter = std::ceil(0.90 * max_iter);
             }
             else
             {

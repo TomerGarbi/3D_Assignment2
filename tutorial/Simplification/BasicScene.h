@@ -42,4 +42,5 @@ private:
     Eigen::MatrixXd N, C, C2, OV, V, T;
     std::vector<Eigen::Matrix4d> Q_vertices;
     igl::min_heap< std::tuple<double, int, int> > Q, Q2;
+    int max_iter;
 };
